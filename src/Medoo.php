@@ -796,14 +796,14 @@ class Medoo
             } elseif ($isArrayValue) {
                 $stack[] = $this->columnPush($value, $map, false, $isJoin);
             } elseif (!$isIntKey && $raw = $this->buildRaw($value, $map)) {
-                preg_match('/(?<column>[\p{L}_][\p{L}\p{N}@$#\-_\.]*[\p{L}_][\p{L}\p{N}@$#\-_\.]+)(\s*\[(?<type>(String|Bool|Int|Number))\])?/u', $key, $match);
+                preg_match('/(?<column>[\p{L}_][\p{L}\p{N}@$#\-_\.]*[\p{L}\p{N}@$#\-_\.]+)(\s*\[(?<type>(String|Bool|Int|Number))\])?/u', $key, $match);
                 $stack[] = "{$raw} AS {$this->columnQuote($match['column'])}";
             } elseif ($isIntKey && is_string($value)) {
                 if ($isJoin && strpos($value, '*') !== false) {
                     throw new InvalidArgumentException('Cannot use table.* to select all columns while joining table.');
                 }
 
-                preg_match('/(?<column>["?\p{L}_][\p{L}\p{N}@$#\-_\.\s]*[\p{L}\p{N}@$#\-_\.]+"?)(?:\s*\((?<alias>[\p{L}_][\p{L}\p{N}@$#\-_\s]*[\p{L}_][\p{L}\p{N}@$#\-_]+)\))?(?:\s*\[(?<type>(?:String|Bool|Int|Number|Object|JSON))\])?/u', $value, $match);
+                preg_match('/(?<column>["?\p{L}_][\p{L}\p{N}@$#\-_\.\s]*[\p{L}\p{N}@$#\-_\.]+"?)(?:\s*\((?<alias>[\p{L}_][\p{L}\p{N}@$#\-_\s]*[\p{L}\p{N}@$#\-_]+)\))?(?:\s*\[(?<type>(?:String|Bool|Int|Number|Object|JSON))\])?/u', $value, $match);
 
                 $columnString = '';
 
@@ -1352,7 +1352,7 @@ class Medoo
 
         foreach ($columns as $key => $value) {
             if (is_int($key)) {
-                preg_match('/([\p{L}_][\p{L}\p{N}@$#\-_]*\.)?(?<column>[\p{L}_][\p{L}\p{N}@$#\-_\s]*[\p{L}_][\p{L}\p{N}@$#\-_]+)(?:\s*\((?<alias>[\p{L}_][\p{L}\p{N}@$#\-_\s]*[\p{L}_][\p{L}\p{N}@$#\-_]+)\))?(?:\s*\[(?<type>(?:String|Bool|Int|Number|Object|JSON))\])?/u', $value, $keyMatch);
+                preg_match('/([\p{L}_][\p{L}\p{N}@$#\-_]*\.)?(?<column>[\p{L}_][\p{L}\p{N}@$#\-_\s]*[\p{L}\p{N}@$#\-_]+)(?:\s*\((?<alias>[\p{L}_][\p{L}\p{N}@$#\-_\s]*[\p{L}_][\p{L}\p{N}@$#\-_]+)\))?(?:\s*\[(?<type>(?:String|Bool|Int|Number|Object|JSON))\])?/u', $value, $keyMatch);
 
                 $columnKey = !empty($keyMatch['alias']) ?
                     $keyMatch['alias'] :
